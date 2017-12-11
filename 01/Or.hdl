@@ -7,13 +7,19 @@
  * Or gate:
  * out = 1 if (a == 1 or b == 1)
  *       0 otherwise
+a b out target
+0 0 1     0
+0 1 1     1
+1 0 1     1
+1 1 0     1
 
-  For Nand(a,b,out)
-  a b out       target   relationship
-  1 1 0           1        !out = target  !(a*b)
-  1 0 1           1        out = target
-  0 1 1           1        out = target
-  0 0 1           0        !out = target  !(a*b)
+a b !a !b  !(!a * !b)
+0 0  1  1    0
+0 1  1  0    1
+1 0  0  1    1
+1 1  0  0    1
+
+
  !(!a * !b)
 
 

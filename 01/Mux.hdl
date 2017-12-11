@@ -12,9 +12,8 @@
  a b  0   a
  a b  1   b
 
- (a + b * sel) + (b)
-
-
+ (a + b * sel)*!sel + ( a*!sel + b)*sel
+ 
 
  */
 
@@ -24,8 +23,29 @@ CHIP Mux {
 
     PARTS:
 
-    And(a=b, b=sel, out=bAndSel);
-    Or(a=bAndSel, b=a, out=firstPart);
-    Or(a=firstPart,b=b,out=out);
+    // And(a=b, b=sel, out=bAndSel);
+    // Or(a=bAndSel, b=a, out=firstPart);
+    // Or(a=firstPart,b=b,out=out);
     // Put your code here:
+
+
+    // (b * sel)
+    Nand(a=b, b=sel, out=nBAndSel);
+    Nand(a=nBAndSel,b=nBAndSel,out=bAndSel);
+    // (!sel)
+    Nand(a=sel,b=sel,out=nSel);
+
+    //a+b*sel
+    Or(a=a,b=bAndSel,out=aOrbAndSel);
+
+    //a*!sel+b
+    And(a=a,b=nSel,out=aAndnSel);
+    Or(a=aAndnSel,b=b,out=aAndnSelOrb);
+
+    //
+    And(a=aOrbAndSel,b=nSel,out=firstPart);
+    And(a=aAndnSelOrb,b=sel,out=secondPart);
+
+    Or(a=firstPart,b=secondPart,out=out);
+
 }
